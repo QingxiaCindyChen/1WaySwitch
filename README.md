@@ -1,0 +1,1 @@
+This is the repository for the simulation studies in the paper: Zeng, D., Chen, Q., Chen, M.H., Ibrahim, J.G. and Amgen Research Groups, 2012. Estimating treatment effects with treatment switching via semicompeting risks models: an application to a colorectal cancer study. Biometrika, 99(1), pp.167-184.
