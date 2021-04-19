@@ -1,14 +1,9 @@
 
-#setwd("C://Papers//Dzeng_SemicompetingRisk//program//TransitionModel")
-#setwd("H://Papers//Zeng_SemicompetingRisk//program")
 source("EM_ESRD3.R")
 source("Covest_ESRD.R")
-#source("Predict.R")
 
-#library(survival)
 library(Design)
-#library(Hmisc)
-
+	
 nsim <- 1000
 n <- 1000
 set.seed(1234767)
@@ -136,7 +131,6 @@ for (m in 1:nsim) {
 	}
   # cat(c(oldpara$beta0vec, oldpara$beta1vec, oldpara$beta2vec, oldpara$alpvec), "\n")   
   sdest <- Covest(simdat, oldpara, indH0, indH1, indH2)
-  # surv.fit <- Predict(simdat, oldpara, h0, h1, h2)  
 	
   Beta0Vec[m, ] <- newpara$beta0vec	
   Beta1Vec[m, ] <- newpara$beta1vec	
@@ -157,38 +151,3 @@ AlpCP <- ifelse(abs((AlpVec-matrix(alpvec, nsim, length(alpvec), byrow=TRUE))/Al
 sim.data <- data.frame(cbind(seq(1,nsim), censD, censE, Beta0Vec, Beta1Vec, Beta2Vec, AlpVec, Beta0Sd, 
  Beta1Sd, Beta2Sd, AlpSd, Beta0CP, Beta1CP, Beta2CP, AlpCP, G))
 save(sim.data, file="sim_result_ESRD_Trans.Rdata")
-
-#     load("sim_result_ESRD_Trans.Rdata")
-#     names(sim.data) <- c("sim", "censD", "censE", "beta0", "gamma0", "beta1", "gamma1", "beta21", "beta22", "gamma21", "gamma22", "gamma23",
-#      "alpha0", "alpha1", "alpha2", "beta0sd", "gamma0sd", "beta1sd", "gamma1sd", "beta21sd", "beta22sd", "gamma21sd", "gamma22sd", "gamma23sd",
-#      "alpha0sd", "alpha1sd", "alpha2sd", "beta0CP", "gamma0CP", "beta1CP", "gamma1CP", "beta21CP", "beta22CP", "beta23CP", "gamma21CP", "gamma22CP", "gamma23CP",
-#      "alpha0CP", "alpha1CP", "alpha2CP", "Group1", "Group2", "Group3", "Group4")
-#  
-#      beta0vec <- c(-1, 1)
-#      beta1vec <- c(-1, 1)
-#      beta2vec <- c(-5, 0.5, 1, 1, 1)
-#      alpvec <- c(-0.5, 1, 1)
-#      npara <- 12
-#      result <- matrix(NA, npara, 6)
-#      result[,1] <- c(beta0vec, beta1vec, beta2vec, alpvec)
-#      result[,2] <- round(apply(sim.data, 2, mean)[4:(4+npara-1)],3)
-#      result[,3] <- round(result[,2]-result[,1],3)
-#      result[,4] <- round(apply(sim.data, 2, sd, na.rm=TRUE)[4:(4+npara-1)],3)
-#      result[,5] <- round(apply(sim.data, 2, mean, na.rm=TRUE)[(4+npara):(4+2*npara-1)],3)
-#      result[,6] <- round(apply(sim.data, 2, mean, na.rm=TRUE)[(4+2*npara):(4+3*npara-1)],3)*100
-#   
-#    colnames(result) <- c("True", "Est", "Bias", "EmpStd", "AvgStd", "CP")
-#    rownames(result) <- c("beta0", "gamma0", "beta1", "gamma1", "beta21", "beta22", "gamma21", "gamma22", "gamma23", "alpha0", "alpha1", "alpha2")  
-# 
-#        True    Est   Bias EmpStd AvgStd   CP
-# beta0  -1.0 -1.002 -0.002  0.177  0.174 94.1
-# gamma0  1.0  1.015  0.015  0.092  0.089 94.2
-# beta1  -1.0 -1.000  0.000  0.089  0.089 94.7
-# gamma1  1.0  1.003  0.003  0.060  0.058 94.9
-# hbeta21 -4.0 -4.030 -0.030  0.208  0.202 94.0
-# beta22  0.5  0.498 -0.002  0.132  0.134 95.4
-# gamma21  1.0  1.007  0.007  0.128  0.124 93.5
-# gamma22  1.0  1.005  0.005  0.081  0.078 94.4
-# alpha0 -0.5 -0.505 -0.005  0.142  0.146 95.7
-# alpha1  1.0  1.001  0.001  0.176  0.180 95.0
-# alpha2  1.0  1.006  0.006  0.107  0.110 96.5
