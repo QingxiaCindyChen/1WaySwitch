@@ -1,7 +1,6 @@
 
 source("EM_ESRD3.R")
 source("Covest_ESRD.R")
-source("Predict_ESRD.R")
 
 library(Design)
 	
@@ -132,7 +131,6 @@ for (m in 1:nsim) {
 	}
   # cat(c(oldpara$beta0vec, oldpara$beta1vec, oldpara$beta2vec, oldpara$alpvec), "\n")   
   sdest <- Covest(simdat, oldpara, indH0, indH1, indH2)
-  surv.fit <- Predict(simdat, oldpara, h0, h1, h2)  
 	
   Beta0Vec[m, ] <- newpara$beta0vec	
   Beta1Vec[m, ] <- newpara$beta1vec	
